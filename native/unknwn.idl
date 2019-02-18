@@ -1,0 +1,105 @@
+/* misc base idl stuff */
+
+cpp_quote("#if 0")
+
+typedef unsigned char  BYTE;
+typedef unsigned short WORD;
+typedef unsigned long  DWORD;
+typedef long           BOOL;
+typedef unsigned char  UCHAR;
+typedef int            INT;
+typedef unsigned int   UINT;
+typedef short          SHORT;
+typedef unsigned short USHORT;
+typedef int            LONG;
+typedef unsigned int   ULONG;
+typedef float          FLOAT;
+typedef double         LONGLONG;
+typedef double         ULONGLONG;
+typedef double         UINT64;
+typedef unsigned char  UINT8;
+typedef double         ULONG_PTR;
+typedef ULONG_PTR      SIZE_T;
+typedef LONG           HRESULT;
+
+typedef struct _LARGE_INTEGER {
+  LONGLONG QuadPart;
+} LARGE_INTEGER;
+
+
+typedef void  *PVOID;
+typedef void  *LPVOID;
+typedef PVOID  HANDLE;
+typedef HANDLE HMODULE;
+typedef HANDLE HDC;
+typedef HANDLE HINSTANCE;
+typedef HANDLE HWND;
+typedef HANDLE HMONITOR;
+
+typedef struct _RECT {
+  LONG left;
+  LONG top;
+  LONG right;
+  LONG bottom;
+} RECT, *PRECT;
+
+typedef struct tagPOINT {
+  LONG x;
+  LONG y;
+} POINT, *PPOINT;
+
+typedef struct tagSIZE
+{
+    LONG cx;
+    LONG cy;
+} SIZE, *PSIZE, *LPSIZE;
+
+typedef char       *LPSTR;
+typedef const char *LPCSTR;
+
+typedef unsigned short       WCHAR;
+typedef const unsigned short *LPCWSTR;
+
+typedef struct _SECURITY_ATTRIBUTES {
+  DWORD  nLength;
+  LPVOID lpSecurityDescriptor;
+  BOOL   bInheritHandle;
+} SECURITY_ATTRIBUTES, *PSECURITY_ATTRIBUTES, *LPSECURITY_ATTRIBUTES;
+
+typedef struct
+{
+  unsigned long  Data1;
+  unsigned short Data2;
+  unsigned short Data3;
+  byte           Data4[ 8 ];
+}
+GUID;
+
+typedef struct _LUID {
+  DWORD LowPart;
+  LONG  HighPart;
+} LUID, *PLUID;
+
+typedef GUID IID,*LPIID;
+typedef IID *REFIID;
+typedef IID *REFGUID;
+
+cpp_quote("#endif")
+
+
+/* actual IUnknown */
+
+[
+  local,
+  object,
+  uuid(00000000-0000-0000-C000-000000000046),
+  pointer_default(unique)
+]
+interface IUnknown
+{
+  typedef [unique] IUnknown *LPUNKNOWN;
+
+  HRESULT QueryInterface(REFIID guid, void** object);
+  ULONG AddRef();
+  ULONG Release();
+}
